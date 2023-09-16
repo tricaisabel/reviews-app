@@ -14,10 +14,15 @@ const reviewSchema = new mongoose.Schema({
     name:{
         type: String,
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 },
 {
     timestamps: true
 })
 
-const User = mongoose.model('Review',reviewSchema) 
-export default User;
+const Review = mongoose.model('Review',reviewSchema) 
+export default Review;

@@ -6,13 +6,11 @@ const companySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    average:{
-        type: Number,
-        min: 0,
-        max: 5,
-        default: 0
-    }
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review',
+    }],
 })
 
-const User = mongoose.model('Company',companySchema) 
-export default User;
+const Company = mongoose.model('Company',companySchema) 
+export default Company;
