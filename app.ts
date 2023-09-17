@@ -11,19 +11,7 @@ const app: Application = express();
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-try{
-    if(process.env.MONGO_API_KEY){
-        mongoose.connect(process.env.MONGO_API_KEY)
-        console.log('Connected to MongoDB Atlas')
-    }
-    else{
-        throw new Error('Missing MongoDB API Key')
-    } 
-}
-catch(error){
-    console.log(error)
-}
-
+mongoose.connect(`${process.env.MONGO_API_KEY}`);
 
 app.use('/companies',companyRouter)
 

@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    avatarLink:{ type: String}
+    image:{ type: String}
 })
 
 const User = mongoose.model('User',userSchema) 
