@@ -10,6 +10,10 @@ const companySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review',
     }],
+    image: {
+        type: String,
+        default: true
+    }
 })
 
 const Company = mongoose.model('Company',companySchema) 
