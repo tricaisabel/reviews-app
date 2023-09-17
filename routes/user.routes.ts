@@ -12,17 +12,8 @@ const upload = multer({storage: multer.memoryStorage()})
 
 
 authRouter.post('/signup', upload.single("file"), async (req: Request,res: Response) => {
-    req.body.url = `${process.env.DEFAULT_USER_IMAGE}`;
-
-    try{
-        if(req.file){
-            req.body.url = await uploadImage(req.file,"users")
-        }
-        signUp(req,res);
-    }
-    catch(error){
-        return res.status(400).json({error})
-    }
+    const url = await uploadImage(req.file,"users")
+    await signUp(req,res, url);
 })
 
 authRouter.post('/login',(req,res)=>{

@@ -7,9 +7,12 @@ const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
 
 export const uploadImage = async (
-    file: Express.Multer.File,
+    file: Express.Multer.File | undefined,
     directory: string,
 ) => {
+    if(!file){
+        return `${process.env.DEFAULT_USER_IMAGE}`;
+    }
     const imagePath = `${directory}/${Date.now()}_${file.originalname}`
     const storageRef = ref(storage, imagePath);
 
