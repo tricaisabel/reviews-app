@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express';
-import Company from '../models/company'
+import Company from '../models/company.model'
 
 const companyRouter = express.Router();
 

@@ -10,7 +10,7 @@ const companySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review',
     }],
-    image: {
+    url: {
         type: String,
         default: true
     }

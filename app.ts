@@ -2,19 +2,28 @@ import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-
-import companyRouter from './routes/companyRouter'
-import uploadRouter from './routes/uploadRouter'
-
 dotenv.config();
+import cookieParser from 'cookie-parser';
+
+import companyRoutes from './routes/company.routes'
+import authRoutes from './routes/user.routes'
+
+
 const app: Application = express();
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+app.use(cookieParser())
 
-mongoose.connect(`${process.env.MONGO_API_KEY}`);
+try{
+    mongoose.connect(`${process.env.MONGO_API_KEY}`);
+    console.log("Connected to MongoDB Atlas")
+}
+catch(error){
+    console.log(error)
+}
 
-app.use('/companies',companyRouter)
-app.use('/images',uploadRouter)
+app.use('/companies',companyRoutes)
+app.use('/auth',authRoutes)
 
 export default app;
