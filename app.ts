@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 
 import companyRoutes from './routes/company.routes'
 import authRoutes from './routes/user.routes'
+import reviewRoutes from './routes/review.routes';
 
 
 const app: Application = express();
@@ -25,5 +26,6 @@ catch(error){
 
 app.use('/companies',companyRoutes)
 app.use('/auth',authRoutes)
+app.use('/reviews',reviewRoutes)
 
 export default app;

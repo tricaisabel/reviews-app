@@ -22,6 +22,8 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+userSchema.set('validateBeforeSave', true);
+
 // hash password before an user is stored
 userSchema.pre('save', async function (next){
     const salt = await bcrypt.genSalt();

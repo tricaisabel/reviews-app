@@ -16,5 +16,7 @@ const companySchema = new mongoose.Schema({
     }
 })
 
+companySchema.set('validateBeforeSave', true);
+
 const Company = mongoose.model('Company',companySchema) 
 export default Company;
