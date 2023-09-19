@@ -2,10 +2,7 @@ import express, {Request, Response} from 'express';
 import {signUp, logIn, logOut, validateNewUser} from '../controllers/user.controller'
 import multer from "multer";
 import {uploadImage} from '../controllers/upload.controller'
-import dotenv from 'dotenv';
 import { Directory } from '../enums/directory.enum';
-import { UserData } from '../types/user-data.type';
-dotenv.config();
 
 const authRouter = express.Router();
 

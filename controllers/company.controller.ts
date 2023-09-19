@@ -1,5 +1,5 @@
 import Company from "../models/company.model";
-import { CompanyData } from "../types/company-data.type";
+import { NewCompany } from "../types/company-data.type";
 import mongoose from "mongoose";
 
 export const getAllCompanies = async () => {
@@ -21,15 +21,15 @@ export const getCompanyById = async (companyId: string) => {
   return company;
 };
 
-export const createCompany = async (companyData: CompanyData) => {
-  const newCompany = await Company.create({
+export const createCompany = async (newCompany: NewCompany) => {
+  const company = await Company.create({
     _id: new mongoose.Types.ObjectId(),
-    name: companyData.name,
-    url: companyData.url,
+    name: newCompany.name,
+    url: newCompany.url,
     reviews: [],
   });
 
-  return newCompany;
+  return company;
 };
 
 export const validateNewCompany = async (name: string): Promise<void> => {

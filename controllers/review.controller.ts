@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import { EditReviewData } from "../types/edit-review-data.type";
-import { ReviewData } from "../types/review-data.type";
+import { EditReview } from "../types/editReview.type";
+import { NewReview } from "../types/review-data.type";
 import { getCompanyById } from "./company.controller";
 
-export const addReviewToCompany = async (reviewData: ReviewData, companyId: string) => {
+export const addReviewToCompany = async (newReview: NewReview, companyId: string) => {
     try {
-      const { rating, description, name, userId } = reviewData;
+      const { rating, description, name, userId } = newReview;
       const company = await getCompanyById(companyId);
   
-      const newReview = {
+      const review = {
         _id: new mongoose.Types.ObjectId(),
         rating,
         description: description ?? "",
@@ -16,18 +16,19 @@ export const addReviewToCompany = async (reviewData: ReviewData, companyId: stri
         user: userId,
       };
   
-      company.reviews.push(newReview);
+      company.reviews.push(review);
   
       await company.save();
-      return newReview;
-    } catch (error) {
+      return review;
+    } 
+    catch (error) {
       throw error;
     }
   };
   
-  export const editReviewOfCompany = async (editReviewData: EditReviewData, companyId: string, reviewId: string) => {
+  export const editReviewOfCompany = async (editReview: EditReview, companyId: string, reviewId: string) => {
     try {
-      const { name, description, rating } = editReviewData;
+      const { name, description, rating } = editReview;
   
       const company = await getCompanyById(companyId);
   
@@ -54,7 +55,8 @@ export const addReviewToCompany = async (reviewData: ReviewData, companyId: stri
       await company.save();
   
       return reviewToUpdate;
-    } catch (error) {
+    } 
+    catch (error) {
       throw error;
     }
   };

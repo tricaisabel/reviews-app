@@ -1,13 +1,13 @@
 import User from '../models/user.model'
 import mongoose from 'mongoose'
-import { UserData } from '../types/user-data.type';
+import { NewUser } from '../types/user-data.type';
 
-export const signUp = async (userData: UserData) => {
+export const signUp = async (newUser: NewUser) => {
     const savedUser = await User.create({
         _id: new mongoose.Types.ObjectId(),
-        email: userData.email,
-        password: userData.password,
-        url: userData.url
+        email: newUser.email,
+        password: newUser.password,
+        url: newUser.url
     })
     return savedUser;
 }

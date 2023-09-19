@@ -1,4 +1,4 @@
-export type ReviewData = {
+export type NewReview = {
     rating: number;
     description?: string;
     name?: string;
