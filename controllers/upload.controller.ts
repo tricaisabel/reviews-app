@@ -1,9 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import dotenv from "dotenv";
 import { Directory } from "../enums/directory.enum";
 import { DefaultImage } from "../enums/default-image.enum";
 import { setupFirebase } from "../database";
-dotenv.config();
 
 const firebaseStorage = setupFirebase()
 

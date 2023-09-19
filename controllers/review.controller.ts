@@ -3,9 +3,9 @@ import { EditReview } from "../types/edit-review.type";
 import { NewReview } from "../types/new-review.type";
 import { getCompanyById } from "./company.controller";
 
-export const addReviewToCompany = async (newReview: NewReview, companyId: string) => {
+export const addReviewToCompany = async (newReview: NewReview, companyId: string, userId: string) => {
     try {
-      const { rating, description, name, userId } = newReview;
+      const { rating, description, name } = newReview;
       const company = await getCompanyById(companyId);
   
       const review = {

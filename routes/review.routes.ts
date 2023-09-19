@@ -6,7 +6,8 @@ const reviewRoutes = express.Router({mergeParams: true});
 reviewRoutes.post("/", async (req: Request, res: Response): Promise<void> => {
     try {
       const {companyId} = req.params;
-      const savedReview = await addReviewToCompany(req.body, companyId);
+      const userId = res.locals.user._id;
+      const savedReview = await addReviewToCompany(req.body, companyId, userId);
       res.status(201).json(savedReview);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
