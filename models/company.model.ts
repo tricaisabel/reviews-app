@@ -1,21 +1,22 @@
 import mongoose from "mongoose";
+import reviewSchema from "./review.model";
 
 const companySchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     name: {
         type: String,
         required: true
     },
-    reviews: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Review',
-    }],
     url: {
         type: String,
-        default: true
-    }
+        required: true
+    },
+    reviews: [reviewSchema],
 })
-
+  
 companySchema.set('validateBeforeSave', true);
 
 const Company = mongoose.model('Company',companySchema) 

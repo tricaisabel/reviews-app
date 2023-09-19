@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     rating: {
         type: Number,
         required: true,
@@ -20,11 +23,6 @@ const reviewSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-    },
-    company: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Company',
-        required: true,
     }
 },
 {
@@ -32,6 +30,4 @@ const reviewSchema = new mongoose.Schema({
 })
 
 reviewSchema.set('validateBeforeSave', true);
-
-const Review = mongoose.model('Review',reviewSchema) 
-export default Review;
+export default reviewSchema;
