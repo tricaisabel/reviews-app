@@ -11,7 +11,9 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
   try {
     const { companyId } = req.params;
     const userId = res.locals.user._id;
+
     const savedReview = await addReviewToCompany(req.body, companyId, userId);
+
     res.status(201).json(savedReview);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -19,11 +21,13 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
   }
 });
 
-reviewRoutes.get("/", async (req: Request, res: Response) => {
+reviewRoutes.get("/user-reviews", async (req: Request, res: Response) => {
   try {
     const userId = res.locals.user._id.toString();
     const { companyId } = req.params;
+
     const reviews = await getUserReviews(companyId, userId);
+
     res.status(200).json(reviews);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
@@ -34,11 +38,13 @@ reviewRoutes.get("/", async (req: Request, res: Response) => {
 reviewRoutes.patch("/:reviewId", async (req: Request, res: Response) => {
   try {
     const { companyId, reviewId } = req.params;
+
     const savedReview = await editReviewOfCompany(
       req.body,
       companyId,
       reviewId
     );
+
     res.status(201).json(savedReview);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";

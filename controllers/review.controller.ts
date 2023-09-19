@@ -21,7 +21,7 @@ export const addReviewToCompany = async (
       user: userId,
     };
 
-    company.reviews.push(review);
+    company.reviews.unshift(review);
 
     await company.save();
     return review;

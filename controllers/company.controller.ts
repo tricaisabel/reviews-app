@@ -7,7 +7,11 @@ export const getAllCompanies = async () => {
   return companies;
 };
 
-export const getCompanyById = async (companyId: string) => {
+export const getCompanyById = async (
+  companyId: string,
+  limit?: number,
+  skip?: number
+) => {
   const objectIdPattern = /^[0-9a-fA-F]{24}$/;
   if (!objectIdPattern.test(companyId)) {
     throw new Error("Please provide a valid ObjectId for companyId");
@@ -15,10 +19,15 @@ export const getCompanyById = async (companyId: string) => {
 
   let company = await Company.findById(companyId);
   if (!company) {
-    throw new Error("Company with given id doesn't exist");
+    throw new Error("Company not found");
   }
 
   return company;
+  // if (!limit && !skip) {
+  //     return company;
+  // }
+
+  // const slice = [skip ?? 0, limit ?? company.reviews.length]
 };
 
 export const createCompany = async (newCompany: NewCompany) => {
