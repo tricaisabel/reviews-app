@@ -1,6 +1,6 @@
 import User from '../models/user.model'
 import mongoose from 'mongoose'
-import { NewUser } from '../types/user-data.type';
+import { NewUser } from '../types/new-user.type';
 
 export const signUp = async (newUser: NewUser) => {
     const savedUser = await User.create({

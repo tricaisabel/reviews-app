@@ -1,5 +1,5 @@
 import Company from "../models/company.model";
-import { NewCompany } from "../types/company-data.type";
+import { NewCompany } from "../types/new-company.type";
 import mongoose from "mongoose";
 
 export const getAllCompanies = async () => {

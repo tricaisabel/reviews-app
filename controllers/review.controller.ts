@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { EditReview } from "../types/editReview.type";
-import { NewReview } from "../types/review-data.type";
+import { EditReview } from "../types/edit-review.type";
+import { NewReview } from "../types/new-review.type";
 import { getCompanyById } from "./company.controller";
 
 export const addReviewToCompany = async (newReview: NewReview, companyId: string) => {
