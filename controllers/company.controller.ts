@@ -41,5 +41,3 @@ export const validateNewCompany = async (name: string): Promise<void> => {
 
   await user.validate();
 };
-
-

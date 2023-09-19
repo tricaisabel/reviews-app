@@ -16,7 +16,7 @@ export const addReviewToCompany = async (
     const review = {
       _id: new mongoose.Types.ObjectId(),
       rating,
-      description: description ?? "",
+      description: description ?? null,
       name: name ?? "Anonymous",
       user: userId,
     };
@@ -69,15 +69,15 @@ export const editReviewOfCompany = async (
 };
 
 export const getUserReviews = async (companyId: string, userId: string) => {
-  try{
+  try {
     const company = await getCompanyById(companyId);
     await checkUserExists(userId);
 
-    const userReviews = company.reviews.filter((review) => review.user._id.toString() === userId);
+    const userReviews = company.reviews.filter(
+      (review) => review.user._id.toString() === userId
+    );
     return userReviews;
-  }
-  catch(error){
+  } catch (error) {
     throw error;
   }
-  
-}
+};
