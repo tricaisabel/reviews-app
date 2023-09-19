@@ -1,6 +1,18 @@
 import User from '../models/user.model'
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt';
 import { NewUser } from '../types/new-user.type';
+import { LoginUser } from '../types/login-user.type';
+
+export const oneDay = 24 * 60 * 60;
+
+export const createToken = (id: string) => {
+    const secret = `${process.env.JWT_SECRET}`
+    return jwt.sign({id}, secret, {
+        expiresIn: oneDay
+    })
+}
 
 export const signUp = async (newUser: NewUser) => {
     const savedUser = await User.create({
@@ -9,6 +21,7 @@ export const signUp = async (newUser: NewUser) => {
         password: newUser.password,
         url: newUser.url
     })
+
     return savedUser;
 }
 
@@ -41,10 +54,18 @@ export const checkUserExists = async(userId: string): Promise<void>=>{
     }
 }
 
-export const logIn = (req: Request, res: Response) => {
-    console.log('login')
-}
+export const logIn = async (loginUser: LoginUser) => {
+    const {email, password} = loginUser;
+    
+    const user = await User.findOne({email})
+    if(!user){
+        throw new Error();
+    }
 
-export const logOut = (req: Request, res: Response) => {
-    console.log('logout')
+    const auth = await bcrypt.compare(password, user.password);
+    if(!auth){
+        throw new Error();
+    }
+
+    return user;
 }
