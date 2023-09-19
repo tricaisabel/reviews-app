@@ -22,7 +22,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
         if(!user){
             throw new Error();
         }
-        console.log(user)
+        
         res.locals.user = user;
         next();
     }
