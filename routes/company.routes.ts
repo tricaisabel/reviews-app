@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import {
   createCompany,
   getAllCompanies,
-  checkCompanyExists,
+  getCompanyById,
   validateNewCompany,
 } from "../controllers/company.controller";
 import { uploadImage } from "../controllers/upload.controller";
@@ -31,7 +31,7 @@ companyRouter.get(
     try {
       const { companyId } = req.params;
 
-      const company = await checkCompanyExists(companyId);
+      const company = await getCompanyById(companyId);
       res.status(200).json(company);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";

@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
-
+export interface Review {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  rating: number;
+  description: string;
+  user: mongoose.Types.ObjectId;
+}
 const reviewSchema = new mongoose.Schema(
   {
     _id: {

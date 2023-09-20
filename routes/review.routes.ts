@@ -2,7 +2,8 @@ import express, { Request, Response } from "express";
 import {
   addReviewToCompany,
   addDescriptionToReview,
-  getUserReviews,
+  getUserReview,
+  getLatestReviews,
 } from "../controllers/review.controller";
 
 const reviewRoutes = express.Router({ mergeParams: true });
@@ -22,12 +23,27 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
   }
 });
 
-reviewRoutes.get("/user-reviews", async (req: Request, res: Response) => {
+reviewRoutes.get("/user", async (req: Request, res: Response) => {
   try {
     const userId = res.locals.user._id.toString();
     const { companyId } = req.params;
 
-    const reviews = await getUserReviews(companyId, userId);
+    const reviews = await getUserReview(companyId, userId);
+
+    res.status(200).json(reviews);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    res.status(400).json({ error: message });
+  }
+});
+
+reviewRoutes.get("/latest", async (req: Request, res: Response) => {
+  try {
+    const userId = res.locals.user._id.toString();
+    const { companyId } = req.params;
+    const end = req.query.end?.toString() ?? "3";
+
+    const reviews = await getLatestReviews(companyId, userId, parseInt(end));
 
     res.status(200).json(reviews);
   } catch (error) {

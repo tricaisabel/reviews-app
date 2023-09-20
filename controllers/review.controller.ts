@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { NewReview } from "../types/new-review.type";
-import { checkCompanyExists } from "./company.controller";
+import { getCompanyById } from "./company.controller";
 import { checkUserExists } from "./user.controller";
 
 export const addReviewToCompany = async (
@@ -10,7 +10,7 @@ export const addReviewToCompany = async (
 ) => {
   try {
     const { rating, description, name } = newReview;
-    const company = await checkCompanyExists(companyId);
+    const company = await getCompanyById(companyId);
 
     const review = {
       _id: new mongoose.Types.ObjectId(),
@@ -48,7 +48,7 @@ export const addDescriptionToReview = async (
   reviewId: string
 ) => {
   try {
-    const company = await checkCompanyExists(companyId);
+    const company = await getCompanyById(companyId);
 
     const reviewToUpdate = company.reviews.find((review) =>
       review._id.equals(reviewId)
@@ -67,15 +67,38 @@ export const addDescriptionToReview = async (
   }
 };
 
-export const getUserReviews = async (companyId: string, userId: string) => {
+export const getUserReview = async (companyId: string, userId: string) => {
   try {
-    const company = await checkCompanyExists(companyId);
+    const company = await getCompanyById(companyId);
     await checkUserExists(userId);
 
     const userReviews = company.reviews.filter(
       (review) => review.user._id.toString() === userId
     );
-    return userReviews;
+    return userReviews[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getLatestReviews = async (
+  companyId: string,
+  userId: string,
+  end: number
+) => {
+  try {
+    const company = await getCompanyById(companyId);
+    await checkUserExists(userId);
+
+    const nonUserReviews = company.reviews.filter(
+      (review) => review.user._id.toString() !== userId
+    );
+
+    if (end < 0) {
+      throw new Error(`Query parameter end must be greater than 0`);
+    }
+
+    return nonUserReviews.slice(0, end + 1);
   } catch (error) {
     throw error;
   }
