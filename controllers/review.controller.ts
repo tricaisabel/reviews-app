@@ -94,11 +94,11 @@ export const getLatestReviews = async (
       (review) => review.user._id.toString() !== userId
     );
 
-    if (end < 0) {
+    if (end <= 0) {
       throw new Error(`Query parameter end must be greater than 0`);
     }
 
-    return nonUserReviews.slice(0, end + 1);
+    return nonUserReviews.slice(0, end);
   } catch (error) {
     throw error;
   }
