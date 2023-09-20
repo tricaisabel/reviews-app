@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import { EditReview } from "../types/edit-review.type";
 import { NewReview } from "../types/new-review.type";
-import { getCompanyById } from "./company.controller";
+import { checkCompanyExists } from "./company.controller";
 import { checkUserExists } from "./user.controller";
 
 export const addReviewToCompany = async (
@@ -11,7 +10,7 @@ export const addReviewToCompany = async (
 ) => {
   try {
     const { rating, description, name } = newReview;
-    const company = await getCompanyById(companyId);
+    const company = await checkCompanyExists(companyId);
 
     const review = {
       _id: new mongoose.Types.ObjectId(),
@@ -23,6 +22,11 @@ export const addReviewToCompany = async (
 
     company.reviews.unshift(review);
 
+    const currentPoint = company.averageRating * company.reviewCount;
+    company.reviewCount++;
+    const newAverageRating = (currentPoint + rating) / company.reviewCount;
+    company.averageRating = Math.round(newAverageRating * 100) / 100;
+
     await company.save();
     return review;
   } catch (error) {
@@ -30,15 +34,13 @@ export const addReviewToCompany = async (
   }
 };
 
-export const editReviewOfCompany = async (
-  editReview: EditReview,
+export const addDescriptionToReview = async (
+  description: string,
   companyId: string,
   reviewId: string
 ) => {
   try {
-    const { name, description, rating } = editReview;
-
-    const company = await getCompanyById(companyId);
+    const company = await checkCompanyExists(companyId);
 
     const reviewToUpdate = company.reviews.find((review) =>
       review._id.equals(reviewId)
@@ -48,18 +50,7 @@ export const editReviewOfCompany = async (
       throw new Error("Review not found in the company");
     }
 
-    if (name) {
-      reviewToUpdate.name = name;
-    }
-
-    if (description) {
-      reviewToUpdate.description = description;
-    }
-
-    if (rating) {
-      reviewToUpdate.rating = rating;
-    }
-
+    reviewToUpdate.description = description;
     await company.save();
 
     return reviewToUpdate;
@@ -70,7 +61,7 @@ export const editReviewOfCompany = async (
 
 export const getUserReviews = async (companyId: string, userId: string) => {
   try {
-    const company = await getCompanyById(companyId);
+    const company = await checkCompanyExists(companyId);
     await checkUserExists(userId);
 
     const userReviews = company.reviews.filter(

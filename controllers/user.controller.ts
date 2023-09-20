@@ -45,16 +45,17 @@ export const validateNewUser = async (
   await user.validate();
 };
 
-export const checkUserExists = async (userId: string): Promise<void> => {
+export const checkUserExists = async (userId: string) => {
   const objectIdPattern = /^[0-9a-fA-F]{24}$/;
   if (!objectIdPattern.test(userId)) {
     throw new Error("Please provide a valid ObjectId for userId");
   }
 
-  let userExists = await User.exists({ _id: userId });
-  if (!userExists) {
+  let user = await User.exists({ _id: userId });
+  if (!user) {
     throw new Error("User with given id doesn't exist");
   }
+  return user;
 };
 
 export const logIn = async (loginUser: LoginUser) => {

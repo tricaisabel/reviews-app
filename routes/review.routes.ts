@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import {
   addReviewToCompany,
-  editReviewOfCompany,
+  addDescriptionToReview,
   getUserReviews,
 } from "../controllers/review.controller";
 
@@ -38,14 +38,19 @@ reviewRoutes.get("/user-reviews", async (req: Request, res: Response) => {
 reviewRoutes.patch("/:reviewId", async (req: Request, res: Response) => {
   try {
     const { companyId, reviewId } = req.params;
+    const { description } = req.body;
 
-    const savedReview = await editReviewOfCompany(
-      req.body,
+    if (!description) {
+      throw new Error("Please provide a description");
+    }
+
+    const savedReview = await addDescriptionToReview(
+      description,
       companyId,
       reviewId
     );
 
-    res.status(201).json(savedReview);
+    res.status(200).json(savedReview);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     res.status(400).json({ error: message });

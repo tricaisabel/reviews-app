@@ -3,15 +3,11 @@ import { NewCompany } from "../types/new-company.type";
 import mongoose from "mongoose";
 
 export const getAllCompanies = async () => {
-  const companies = await Company.find().populate("reviews").exec();
+  const companies = await Company.find().select("-reviews -__v").exec();
   return companies;
 };
 
-export const getCompanyById = async (
-  companyId: string,
-  limit?: number,
-  skip?: number
-) => {
+export const checkCompanyExists = async (companyId: string) => {
   const objectIdPattern = /^[0-9a-fA-F]{24}$/;
   if (!objectIdPattern.test(companyId)) {
     throw new Error("Please provide a valid ObjectId for companyId");
@@ -21,13 +17,7 @@ export const getCompanyById = async (
   if (!company) {
     throw new Error("Company not found");
   }
-
   return company;
-  // if (!limit && !skip) {
-  //     return company;
-  // }
-
-  // const slice = [skip ?? 0, limit ?? company.reviews.length]
 };
 
 export const createCompany = async (newCompany: NewCompany) => {
