@@ -20,8 +20,16 @@ export const addReviewToCompany = async (
       user: userId,
     };
 
+    // check if user has already left a review to the company
+    const userIds = company.reviews.map((review) => review.user._id.toString());
+    if (userIds.includes(userId.toString())) {
+      throw new Error("You already submitted a review to this company");
+    }
+
+    // add review
     company.reviews.unshift(review);
 
+    // update company stats
     const currentPoint = company.averageRating * company.reviewCount;
     company.reviewCount++;
     const newAverageRating = (currentPoint + rating) / company.reviewCount;

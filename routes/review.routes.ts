@@ -11,6 +11,7 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
   try {
     const { companyId } = req.params;
     const userId = res.locals.user._id;
+    console.log(res.locals.user);
 
     const savedReview = await addReviewToCompany(req.body, companyId, userId);
 
