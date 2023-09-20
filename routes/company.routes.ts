@@ -31,7 +31,7 @@ companyRouter.get(
     try {
       const { companyId } = req.params;
 
-      const company = await getCompanyById(companyId);
+      const company = await getCompanyById(companyId, false);
       res.status(200).json(company);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";

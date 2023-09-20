@@ -33,7 +33,7 @@ export const addReviewToCompany = async (
     const currentPoint = company.averageRating * company.reviewCount;
     company.reviewCount++;
     const newAverageRating = (currentPoint + rating) / company.reviewCount;
-    company.averageRating = Math.round(newAverageRating * 100) / 100;
+    company.averageRating = parseFloat(newAverageRating.toFixed(2));
 
     await company.save();
     return review;
