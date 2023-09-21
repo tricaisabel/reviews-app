@@ -5,6 +5,7 @@ import {
   getUserReview,
   getLatestReviews,
 } from "../controllers/review.controller";
+import { errorHandler } from "./errorHandler";
 
 const reviewRoutes = express.Router({ mergeParams: true });
 
@@ -12,14 +13,18 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
   try {
     const { companyId } = req.params;
     const userId = res.locals.user._id;
-    console.log(res.locals.user);
+    const userUrl = res.locals.user.url;
 
-    const savedReview = await addReviewToCompany(req.body, companyId, userId);
+    const savedReview = await addReviewToCompany(
+      req.body,
+      companyId,
+      userId,
+      userUrl
+    );
 
-    res.status(201).json(savedReview);
+    res.status(201).json({ review: savedReview });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    res.status(400).json({ error: message });
+    errorHandler(error, res);
   }
 });
 
@@ -28,12 +33,11 @@ reviewRoutes.get("/user", async (req: Request, res: Response) => {
     const userId = res.locals.user._id.toString();
     const { companyId } = req.params;
 
-    const reviews = await getUserReview(companyId, userId);
+    const review = await getUserReview(companyId, userId);
 
-    res.status(200).json(reviews);
+    res.status(200).json({ review });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    res.status(400).json({ error: message });
+    errorHandler(error, res);
   }
 });
 
@@ -45,10 +49,9 @@ reviewRoutes.get("/latest", async (req: Request, res: Response) => {
 
     const reviews = await getLatestReviews(companyId, userId, parseInt(end));
 
-    res.status(200).json(reviews);
+    res.status(200).json({ reviews });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    res.status(400).json({ error: message });
+    errorHandler(error, res);
   }
 });
 
@@ -61,16 +64,11 @@ reviewRoutes.patch("/:reviewId", async (req: Request, res: Response) => {
       throw new Error("Please provide a description");
     }
 
-    const savedReview = await addDescriptionToReview(
-      description,
-      companyId,
-      reviewId
-    );
+    await addDescriptionToReview(description, companyId, reviewId);
 
-    res.status(200).json(savedReview);
+    res.status(200).send("Your review has been updated");
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    res.status(400).json({ error: message });
+    errorHandler(error, res);
   }
 });
 

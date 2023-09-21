@@ -9,8 +9,6 @@ import {
 import multer from "multer";
 import { uploadImage } from "../controllers/upload.controller";
 import { Directory } from "../enums/directory.enum";
-import { LoginUser } from "../types/login-user.type";
-import User from "../models/user.model";
 
 const authRouter = express.Router();
 
@@ -32,10 +30,10 @@ authRouter.post(
       const token = createToken(savedUser._id.toString());
 
       res.cookie("jwt", token, { httpOnly: true, maxAge: oneDay * 1000 });
-      res.status(201).json(savedUser);
+      res.status(201).json({ user: savedUser });
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
-      res.status(400).json({ error: message });
+      res.status(400).send(message);
     }
   }
 );
@@ -43,18 +41,25 @@ authRouter.post(
 authRouter.post("/login", async (req: Request, res: Response) => {
   try {
     const user = await logIn(req.body);
+    if (!user) {
+      return res.status(200).send("Invalid credentials");
+    }
     const token = createToken(user._id.toString());
 
     res.cookie("jwt", token, { httpOnly: true, maxAge: oneDay * 1000 });
-    res.status(200).json({ message: "You have been logged in" });
+    res.status(200).json({
+      email: user.email,
+      url: user.url,
+    });
   } catch (error) {
-    res.status(400).json({ error: "Wrong credentials" });
+    const message = error instanceof Error ? error.message : "Unknown error";
+    res.status(400).send(message);
   }
 });
 
 authRouter.post("/logout", (req: Request, res: Response) => {
   res.cookie("jwt", "", { maxAge: 0 });
-  res.status(200).json({ message: "You have been logged out" });
+  res.status(200).send("You have been logged out");
 });
 
 export default authRouter;

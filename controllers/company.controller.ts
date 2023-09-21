@@ -23,12 +23,7 @@ export const getCompanyById = async (
   let company;
 
   if (withReviews) {
-    company = await Company.findById(companyId)
-      .populate({
-        path: "reviews.user",
-        select: "url _id",
-      })
-      .exec();
+    company = await Company.findById(companyId).exec();
   } else {
     company = await Company.findById(companyId).select("-reviews -__v").exec();
   }

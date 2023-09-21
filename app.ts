@@ -1,4 +1,8 @@
-import express, { Application } from "express";
+import express, {
+  Application,
+  ErrorRequestHandler,
+  NextFunction,
+} from "express";
 import bodyParser from "body-parser";
 import { setupMongoDB } from "./database";
 import cookieParser from "cookie-parser";

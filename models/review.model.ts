@@ -26,9 +26,12 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       default: "Anonymous",
     },
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      required: true,
+    },
+    userUrl: {
+      type: String,
       required: true,
     },
   },

@@ -9,6 +9,7 @@ import { uploadImage } from "../controllers/upload.controller";
 import multer from "multer";
 import reviewRoutes from "./review.routes";
 import { Directory } from "../enums/directory.enum";
+import { errorHandler } from "./errorHandler";
 
 const companyRouter = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -18,10 +19,9 @@ companyRouter.use("/:companyId/reviews", reviewRoutes);
 companyRouter.get("/", async (req: Request, res: Response): Promise<void> => {
   try {
     const companies = await getAllCompanies();
-    res.status(200).json(companies);
+    res.status(200).json({ companies });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    res.status(400).json({ error: message });
+    errorHandler(error, res);
   }
 });
 
@@ -32,10 +32,9 @@ companyRouter.get(
       const { companyId } = req.params;
 
       const company = await getCompanyById(companyId, false);
-      res.status(200).json(company);
+      res.status(200).json({ company });
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      res.status(400).json({ error: message });
+      errorHandler(error, res);
     }
   }
 );
@@ -51,10 +50,9 @@ companyRouter.post(
         name: req.body.name,
         url,
       });
-      res.status(201).json(newCompany);
+      res.status(201).json({ company: newCompany });
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      res.status(400).json({ error: message });
+      errorHandler(error, res);
     }
   }
 );

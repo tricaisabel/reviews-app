@@ -12,7 +12,7 @@ export const authMiddleware = async (
   const token = req.cookies.jwt;
 
   if (!token) {
-    return res.status(401).json({ error: "Please log in or sign up first" });
+    return res.status(401).send("Please log in or sign up first");
   }
 
   try {
@@ -29,7 +29,7 @@ export const authMiddleware = async (
     res.locals.user = user;
     next();
   } catch (error) {
-    res.status(400).json({ error: "Your token is invalid" });
+    res.status(400).send("Your token is invalid");
   }
 };
 

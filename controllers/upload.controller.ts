@@ -1,6 +1,6 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Directory } from "../enums/directory.enum";
-import { DefaultImage } from "../enums/default-image.enum";
+import { DefaultImage } from "../enums/image.enum";
 import { setupFirebase } from "../database";
 
 const firebaseStorage = setupFirebase();

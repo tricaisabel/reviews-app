@@ -2,31 +2,33 @@ import mongoose from "mongoose";
 import { NewReview } from "../types/new-review.type";
 import { getCompanyById } from "./company.controller";
 import { checkUserExists } from "./user.controller";
+import { DefaultImage } from "../enums/image.enum";
 
 export const addReviewToCompany = async (
   newReview: NewReview,
   companyId: string,
-  userId: string
+  userId: string,
+  userUrl: string
 ) => {
   try {
     const { rating, description, name } = newReview;
     const company = await getCompanyById(companyId);
 
-    const review = {
-      _id: new mongoose.Types.ObjectId(),
-      rating,
-      description: description ?? null,
-      name: name ?? "Anonymous",
-      user: userId,
-    };
-
     // check if user has already left a review to the company
-    const userIds = company.reviews.map((review) => review.user._id.toString());
+    const userIds = company.reviews.map((review) => review.userId.toString());
     if (userIds.includes(userId.toString())) {
       throw new Error("You already submitted a review to this company");
     }
 
     // add review
+    const review = {
+      _id: new mongoose.Types.ObjectId(),
+      rating,
+      description: description ?? null,
+      name: name ?? "Anonymous",
+      userId,
+      userUrl: name ? userUrl : DefaultImage.USER,
+    };
     company.reviews.unshift(review);
 
     // update company stats
@@ -73,9 +75,10 @@ export const getUserReview = async (companyId: string, userId: string) => {
     await checkUserExists(userId);
 
     const userReviews = company.reviews.filter(
-      (review) => review.user._id.toString() === userId
+      (review) => review.userId.toString() === userId
     );
-    return userReviews[0];
+
+    return userReviews[0] ?? null;
   } catch (error) {
     throw error;
   }
@@ -91,7 +94,7 @@ export const getLatestReviews = async (
     await checkUserExists(userId);
 
     const nonUserReviews = company.reviews.filter(
-      (review) => review.user._id.toString() !== userId
+      (review) => review.userId.toString() !== userId
     );
 
     if (end <= 0) {

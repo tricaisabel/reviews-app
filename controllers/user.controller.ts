@@ -63,12 +63,12 @@ export const logIn = async (loginUser: LoginUser) => {
 
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error();
+    return null;
   }
 
   const auth = await bcrypt.compare(password, user.password);
   if (!auth) {
-    throw new Error();
+    return null;
   }
 
   return user;
