@@ -15,14 +15,9 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
     const userId = res.locals.user._id;
     const userUrl = res.locals.user.url;
 
-    const savedReview = await addReviewToCompany(
-      req.body,
-      companyId,
-      userId,
-      userUrl
-    );
+     await addReviewToCompany(req.body, companyId, userId, userUrl);
 
-    res.status(201).json({ review: savedReview });
+     res.status(201).send("Review added successfully");
   } catch (error) {
     errorHandler(error, res);
   }
@@ -66,7 +61,7 @@ reviewRoutes.patch("/:reviewId", async (req: Request, res: Response) => {
 
     await addDescriptionToReview(description, companyId, reviewId);
 
-    res.status(200).send("Your review has been updated");
+    res.status(200).send("Description added successfully");
   } catch (error) {
     errorHandler(error, res);
   }

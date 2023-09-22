@@ -18,7 +18,7 @@ export const setupFirebase = () => {
 
 export const setupMongoDB = () => {
   try {
-    mongoose.connect(`${process.env.MONGO_API_KEY}`);
+    mongoose.connect(`${process.env.MONGO_DEV_API_KEY}`);
     console.log("Connected to MongoDB Atlas");
   } catch (error) {
     console.log(error);

@@ -38,7 +38,6 @@ export const addReviewToCompany = async (
     company.averageRating = parseFloat(newAverageRating.toFixed(2));
 
     await company.save();
-    return review;
   } catch (error) {
     throw error;
   }

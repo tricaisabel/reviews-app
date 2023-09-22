@@ -9,6 +9,7 @@ import {
 import multer from "multer";
 import { uploadImage } from "../controllers/upload.controller";
 import { Directory } from "../enums/directory.enum";
+import { errorHandler } from "./errorHandler";
 
 const authRouter = express.Router();
 
@@ -32,8 +33,7 @@ authRouter.post(
       res.cookie("jwt", token, { httpOnly: true, maxAge: oneDay * 1000 });
       res.status(201).json({ user: savedUser });
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      res.status(400).send(message);
+      errorHandler(error, res);
     }
   }
 );
@@ -42,7 +42,7 @@ authRouter.post("/login", async (req: Request, res: Response) => {
   try {
     const user = await logIn(req.body);
     if (!user) {
-      return res.status(200).send("Invalid credentials");
+      throw new Error("Invalid credentials");
     }
     const token = createToken(user._id.toString());
 
@@ -52,8 +52,7 @@ authRouter.post("/login", async (req: Request, res: Response) => {
       url: user.url,
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    res.status(400).send(message);
+    errorHandler(error, res);
   }
 });
 
