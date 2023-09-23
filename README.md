@@ -14,7 +14,7 @@
 - `npm run dev`
 - The message "Connected to MongoDB Atlas" should appear.
 - This command will start the server on [http://localhost:8080](http://localhost:8080)
-- Now, you can [start the front end application](https://github.com/tricaisabel/reviews-app-fe) in antoher location/directory
+- Now, you can [start the front end application](https://github.com/tricaisabel/reviews-app-fe) in another instance
 
 ### Test using Postman
 - Download the reviews-app-postman-collection.json file from Google Drive
