@@ -15,9 +15,14 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
     const userId = res.locals.user._id;
     const userUrl = res.locals.user.url;
 
-     await addReviewToCompany(req.body, companyId, userId, userUrl);
+    const review = await addReviewToCompany(
+      req.body,
+      companyId,
+      userId,
+      userUrl
+    );
 
-     res.status(201).send("Review added successfully");
+     res.status(201).json({ review });
   } catch (error) {
     errorHandler(error, res);
   }

@@ -20,14 +20,14 @@ export const addReviewToCompany = async (
       throw new Error("You already submitted a review to this company");
     }
 
-    // add review
+    // add review to the front
     const review = {
       _id: new mongoose.Types.ObjectId(),
       rating,
       description: description ?? null,
-      name: name ?? "Anonymous",
+      name: name === "" ? "Anonymous" : name,
       userId,
-      userUrl: name ? userUrl : DefaultImage.USER,
+      userUrl: name === "" ? DefaultImage.USER : userUrl,
     };
     company.reviews.unshift(review);
 
@@ -38,6 +38,7 @@ export const addReviewToCompany = async (
     company.averageRating = parseFloat(newAverageRating.toFixed(2));
 
     await company.save();
+    return review;
   } catch (error) {
     throw error;
   }

@@ -48,8 +48,10 @@ authRouter.post("/login", async (req: Request, res: Response) => {
 
     res.cookie("jwt", token, { httpOnly: true, maxAge: oneDay * 1000 });
     res.status(200).json({
-      email: user.email,
-      url: user.url,
+      user: {
+        email: user.email,
+        url: user.url,
+      },
     });
   } catch (error) {
     errorHandler(error, res);
