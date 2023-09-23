@@ -17,9 +17,8 @@
 - Now, you can [start the front end application](https://github.com/tricaisabel/reviews-app-fe) in another instance
 
 ### Test using Postman
-- Download the reviews-app-postman-collection.json file from Google Drive
-- Open Postman
-- Click the import button and select the downloaded file.
+- Download the [this json file](https://drive.google.com/drive/u/1/folders/0ABtQkhbdTJ_hUk9PVA) from Google Drive. It contains requests that can be imported into Postman.
+- Click the import button in Postman and select the downloaded json file.
 - Try the imported requests and happy testing!
 
 Note: To be able to send requests to companies you need to have a json web token provided by the login request
