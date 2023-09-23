@@ -64,13 +64,9 @@ reviewRoutes.patch("/:reviewId", async (req: Request, res: Response) => {
       throw new Error("Please provide a description");
     }
 
-    const review = await addDescriptionToReview(
-      description,
-      companyId,
-      reviewId
-    );
+    await addDescriptionToReview(description, companyId, reviewId);
 
-    res.status(200).json(review);
+    res.status(200).send("Your review was updated");
   } catch (error) {
     errorHandler(error, res);
   }

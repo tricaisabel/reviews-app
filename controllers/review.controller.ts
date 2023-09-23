@@ -11,8 +11,7 @@ export const addReviewToCompany = async (
   userUrl: string
 ) => {
   try {
-    const { rating, description } = newReview;
-    let name = newReview.name === "" ? "Anonymous" : newReview.name;
+    const { rating, description, name } = newReview;
     const company = await getCompanyById(companyId);
 
     // check if user has already left a review to the company
