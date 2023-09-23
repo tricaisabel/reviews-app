@@ -17,7 +17,7 @@
 - Now, you can [start the front end application](https://github.com/tricaisabel/reviews-app-fe) in another instance
 
 ### Test using Postman
-- Download the [this json file](https://drive.google.com/drive/u/1/folders/0ABtQkhbdTJ_hUk9PVA) from Google Drive. It contains requests that can be imported into Postman.
+- Download the [this json file](https://drive.google.com/file/d/1UOdRhZ2-dSOdpXMjmrAlijQpJXU2xRaw/view?usp=sharing) from Google Drive. It contains requests that can be imported into Postman.
 - Click the import button in Postman and select the downloaded json file.
 - Try the imported requests and happy testing!
 
