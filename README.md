@@ -6,9 +6,9 @@
 - `npm install`
 
 ### Create a local .env file with the API keys
-- Click the Google Drive link provided by me. 
-- Open env.txt, copy the content.
-- Create a new .env file in the root of the review-app-be directory and paste the content.
+- Download the file provided by me (env.txt)
+- Open it and copy the content.
+- Create a new .env file in the root of the review-app-be directory and paste the content. Save.
 
 ### Start the back-end server
 - `npm run dev`
@@ -17,8 +17,8 @@
 - Now, you can [start the front end application](https://github.com/tricaisabel/reviews-app-fe) in another instance
 
 ### Test using Postman
-- Download the [this json file](https://drive.google.com/file/d/1UOdRhZ2-dSOdpXMjmrAlijQpJXU2xRaw/view?usp=sharing) from Google Drive. It contains requests that can be imported into Postman.
-- Click the import button in Postman and select the downloaded json file.
+- Download the file provided by me (reviews-app-postman-collection.json)
+- Click the import button in Postman and select the file.
 - Try the imported requests and happy testing!
 
 Note: To be able to send requests to companies you need to have a json web token provided by the login request
