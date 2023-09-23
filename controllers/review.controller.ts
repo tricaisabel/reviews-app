@@ -11,7 +11,8 @@ export const addReviewToCompany = async (
   userUrl: string
 ) => {
   try {
-    const { rating, description, name } = newReview;
+    const { rating, description } = newReview;
+    let name = newReview.name === "" ? "Anonymous" : newReview.name;
     const company = await getCompanyById(companyId);
 
     // check if user has already left a review to the company
@@ -20,14 +21,17 @@ export const addReviewToCompany = async (
       throw new Error("You already submitted a review to this company");
     }
 
+    // make image anonymous is name is empty
+    let url = newReview.name === "" ? DefaultImage.USER : userUrl;
+
     // add review
     const review = {
       _id: new mongoose.Types.ObjectId(),
       rating,
-      description: description ?? null,
-      name: name ?? "Anonymous",
+      description,
+      name,
       userId,
-      userUrl: name ? userUrl : DefaultImage.USER,
+      userUrl: url,
     };
     company.reviews.unshift(review);
 
@@ -38,6 +42,7 @@ export const addReviewToCompany = async (
     company.averageRating = parseFloat(newAverageRating.toFixed(2));
 
     await company.save();
+    return review;
   } catch (error) {
     throw error;
   }

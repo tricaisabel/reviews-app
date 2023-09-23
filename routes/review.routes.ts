@@ -15,9 +15,14 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
     const userId = res.locals.user._id;
     const userUrl = res.locals.user.url;
 
-     await addReviewToCompany(req.body, companyId, userId, userUrl);
+    const review = await addReviewToCompany(
+      req.body,
+      companyId,
+      userId,
+      userUrl
+    );
 
-     res.status(201).send("Review added successfully");
+    res.status(201).json({ review });
   } catch (error) {
     errorHandler(error, res);
   }
@@ -59,9 +64,13 @@ reviewRoutes.patch("/:reviewId", async (req: Request, res: Response) => {
       throw new Error("Please provide a description");
     }
 
-    await addDescriptionToReview(description, companyId, reviewId);
+    const review = await addDescriptionToReview(
+      description,
+      companyId,
+      reviewId
+    );
 
-    res.status(200).send("Description added successfully");
+    res.status(200).json(review);
   } catch (error) {
     errorHandler(error, res);
   }

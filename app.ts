@@ -1,8 +1,4 @@
-import express, {
-  Application,
-  ErrorRequestHandler,
-  NextFunction,
-} from "express";
+import express, { Application } from "express";
 import bodyParser from "body-parser";
 import { setupMongoDB } from "./database";
 import cookieParser from "cookie-parser";
@@ -11,12 +7,12 @@ import authRoutes from "./routes/user.routes";
 import authMiddleware from "./middleware/auth.middleware";
 import cors from "cors";
 
-const app: Application = express();
+let app: Application = express();
 
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: [
     "Content-Type",
     "Authorization",
