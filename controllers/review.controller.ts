@@ -21,17 +21,14 @@ export const addReviewToCompany = async (
       throw new Error("You already submitted a review to this company");
     }
 
-    // make image anonymous is name is empty
-    let url = newReview.name === "" ? DefaultImage.USER : userUrl;
-
     // add review
     const review = {
       _id: new mongoose.Types.ObjectId(),
       rating,
-      description,
-      name,
+      description: description ?? null,
+      name: name === "" ? "Anonymous" : name,
       userId,
-      userUrl: url,
+      userUrl: name === "" ? DefaultImage.USER : userUrl,
     };
     company.reviews.unshift(review);
 

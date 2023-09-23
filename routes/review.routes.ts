@@ -22,7 +22,7 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
       userUrl
     );
 
-    res.status(201).json({ review });
+     res.status(201).json({ review });
   } catch (error) {
     errorHandler(error, res);
   }
