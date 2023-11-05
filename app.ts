@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import bodyParser from "body-parser";
 import { setupMongoDB } from "./database";
 import cookieParser from "cookie-parser";
-import companyRoutes from "./routes/company.routes";
+import productRoutes from "./routes/product.routes";
 import authRoutes from "./routes/user.routes";
 import authMiddleware from "./middleware/auth.middleware";
 import cors from "cors";
@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 setupMongoDB();
 
-app.use("/companies", authMiddleware, companyRoutes);
+app.use("/products", authMiddleware, productRoutes);
 app.use("/auth", authRoutes);
 
 export default app;

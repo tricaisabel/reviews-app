@@ -20,4 +20,4 @@
 - Click the import button in Postman and select the reviews-app-postman-collection.json file (at the root of the reviews-app-be project)
 - Try the imported request templates and happy testing!
 
-Note: To be able to send requests to companies you need to have a json web token provided by the login request
+Note: To be able to send requests to products you need to have a json web token provided by the login request

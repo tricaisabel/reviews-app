@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { NewUser } from "../types/new-user.type";
 import { LoginUser } from "../types/login-user.type";
+import Cart from "../models/cart.model";
 
 export const oneDay = 24 * 60 * 60;
 
@@ -21,6 +22,11 @@ export const signUp = async (newUser: NewUser) => {
     password: newUser.password,
     url: newUser.url,
   });
+
+  await Cart.create({
+    user: savedUser._id,
+    items:[]
+  })
 
   return savedUser;
 };

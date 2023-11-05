@@ -26,14 +26,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/companies/650ec855fe8d7dc5e94c6b81/reviews",
+									"raw": "http://localhost:8080/products/650ec855fe8d7dc5e94c6b81/reviews",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"companies",
+										"products",
 										"650ec855fe8d7dc5e94c6b81",
 										"reviews"
 									]
@@ -56,14 +56,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/companies/650ec7fcfe8d7dc5e94c6b7d/reviews",
+									"raw": "http://localhost:8080/products/650ec7fcfe8d7dc5e94c6b7d/reviews",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"companies",
+										"products",
 										"650ec7fcfe8d7dc5e94c6b7d",
 										"reviews"
 									]
@@ -86,14 +86,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/companies/650ec7fcfe8d7dc5e94c6b7d/reviews",
+									"raw": "http://localhost:8080/products/650ec7fcfe8d7dc5e94c6b7d/reviews",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"companies",
+										"products",
 										"650ec7fcfe8d7dc5e94c6b7d",
 										"reviews"
 									]
@@ -121,14 +121,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/companies/650aa388a0082d0356051b16/reviews/650e9800137db0d291a3fedb",
+									"raw": "http://localhost:8080/products/650aa388a0082d0356051b16/reviews/650e9800137db0d291a3fedb",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"companies",
+										"products",
 										"650aa388a0082d0356051b16",
 										"reviews",
 										"650e9800137db0d291a3fedb"
@@ -148,14 +148,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/companies/650aa388a0082d0356051b16/reviews/user",
+									"raw": "http://localhost:8080/products/650aa388a0082d0356051b16/reviews/user",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"companies",
+										"products",
 										"650aa388a0082d0356051b16",
 										"reviews",
 										"user"
@@ -170,14 +170,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/companies/650aa66ba0082d0356051b70/reviews/latest",
+									"raw": "http://localhost:8080/products/650aa66ba0082d0356051b70/reviews/latest",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"companies",
+										"products",
 										"650aa66ba0082d0356051b70",
 										"reviews",
 										"latest"
@@ -198,167 +198,145 @@
 			]
 		},
 		{
-			"name": "company",
-			"item": [
-				{
-					"name": "add company",
-					"item": [
-						{
-							"name": "add company with image",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "New Company Example 1",
-											"type": "text"
-										},
-										{
-											"key": "file",
-											"type": "file",
-											"src": "/Users/isabel.trica/Downloads/adrien-olichon-ZgREXhl8ER0-unsplash.jpg"
-										}
-									]
-								},
-								"url": {
-									"raw": "http://localhost:8080/companies",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"companies"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "add company without image",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "New Company Example 2",
-											"type": "text"
-										},
-										{
-											"key": "file",
-											"type": "file",
-											"src": [],
-											"disabled": true
-										}
-									]
-								},
-								"url": {
-									"raw": "http://localhost:8080/companies",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"companies"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "get company",
-					"item": [
-						{
-							"name": "get company with existing id",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/companies/650aa66ba0082d0356051b70",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"companies",
-										"650aa66ba0082d0356051b70"
-									],
-									"query": [
-										{
-											"key": "limit",
-											"value": "3",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get company with non-existent id",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/companies/650a9d6b94cde917e895a3b1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"companies",
-										"650a9d6b94cde917e895a3b1"
-									],
-									"query": [
-										{
-											"key": "limit",
-											"value": "3",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "get all companies",
-					"item": [
-						{
-							"name": "get all companies",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/companies",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"companies"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
+      "name": "product",
+      "item": [
+        {
+          "name": "add product",
+          "item": [
+            {
+              "name": "add product with image",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "New Product Example 1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/Users/isabel.trica/Downloads/adrien-olichon-ZgREXhl8ER0-unsplash.jpg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:8080/products",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["products"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add product without image",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "New Product Example 2",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": [],
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:8080/products",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["products"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "get product",
+          "item": [
+            {
+              "name": "get product with existing id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/products/650aa66ba0082d0356051b70",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["products", "650aa66ba0082d0356051b70"],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "3",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get product with non-existent id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/products/650a9d6b94cde917e895a3b1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["products", "650a9d6b94cde917e895a3b1"],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "3",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "get all products",
+          "item": [
+            {
+              "name": "get all products",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/products",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["products"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
 		{
 			"name": "user",
 			"item": [

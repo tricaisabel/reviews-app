@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import {
-  addReviewToCompany,
+  addReviewToProduct,
   addDescriptionToReview,
   getUserReview,
   getLatestReviews,
@@ -11,13 +11,13 @@ const reviewRoutes = express.Router({ mergeParams: true });
 
 reviewRoutes.post("/", async (req: Request, res: Response) => {
   try {
-    const { companyId } = req.params;
+    const { productId } = req.params;
     const userId = res.locals.user._id;
     const userUrl = res.locals.user.url;
 
-    const review = await addReviewToCompany(
+    const review = await addReviewToProduct(
       req.body,
-      companyId,
+      productId,
       userId,
       userUrl
     );
@@ -31,9 +31,9 @@ reviewRoutes.post("/", async (req: Request, res: Response) => {
 reviewRoutes.get("/user", async (req: Request, res: Response) => {
   try {
     const userId = res.locals.user._id.toString();
-    const { companyId } = req.params;
+    const { productId } = req.params;
 
-    const review = await getUserReview(companyId, userId);
+    const review = await getUserReview(productId, userId);
 
     res.status(200).json({ review });
   } catch (error) {
@@ -44,10 +44,10 @@ reviewRoutes.get("/user", async (req: Request, res: Response) => {
 reviewRoutes.get("/latest", async (req: Request, res: Response) => {
   try {
     const userId = res.locals.user._id.toString();
-    const { companyId } = req.params;
+    const { productId } = req.params;
     const end = req.query.end?.toString() ?? "3";
 
-    const reviews = await getLatestReviews(companyId, userId, parseInt(end));
+    const reviews = await getLatestReviews(productId, userId, parseInt(end));
 
     res.status(200).json({ reviews });
   } catch (error) {
@@ -57,14 +57,14 @@ reviewRoutes.get("/latest", async (req: Request, res: Response) => {
 
 reviewRoutes.patch("/:reviewId", async (req: Request, res: Response) => {
   try {
-    const { companyId, reviewId } = req.params;
+    const { productId, reviewId } = req.params;
     const { description } = req.body;
 
     if (!description) {
       throw new Error("Please provide a description");
     }
 
-    await addDescriptionToReview(description, companyId, reviewId);
+    await addDescriptionToReview(description, productId, reviewId);
 
     res.status(200).send("Your review was updated");
   } catch (error) {

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
+import productSchema from './product.model'
 
 const userSchema = new mongoose.Schema({
   _id: {

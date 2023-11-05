@@ -1,23 +1,23 @@
 import mongoose from "mongoose";
 import { NewReview } from "../types/new-review.type";
-import { getCompanyById } from "./company.controller";
+import { getProductById } from "./product.controller";
 import { checkUserExists } from "./user.controller";
 import { DefaultImage } from "../enums/image.enum";
 
-export const addReviewToCompany = async (
+export const addReviewToProduct = async (
   newReview: NewReview,
-  companyId: string,
+  productId: string,
   userId: string,
   userUrl: string
 ) => {
   try {
     const { rating, description, name } = newReview;
-    const company = await getCompanyById(companyId);
+    const product = await getProductById(productId);
 
-    // check if user has already left a review to the company
-    const userIds = company.reviews.map((review) => review.userId.toString());
+    // check if user has already left a review to the product
+    const userIds = product.reviews.map((review) => review.userId.toString());
     if (userIds.includes(userId.toString())) {
-      throw new Error("You already submitted a review to this company");
+      throw new Error("You already submitted a review to this product");
     }
 
     // add review
@@ -29,15 +29,15 @@ export const addReviewToCompany = async (
       userId,
       userUrl: name === "" ? DefaultImage.USER : userUrl,
     };
-    company.reviews.unshift(review);
+    product.reviews.unshift(review);
 
-    // update company stats
-    const currentPoint = company.averageRating * company.reviewCount;
-    company.reviewCount++;
-    const newAverageRating = (currentPoint + rating) / company.reviewCount;
-    company.averageRating = parseFloat(newAverageRating.toFixed(2));
+    // update product stats
+    const currentPoint = product.averageRating * product.reviewCount;
+    product.reviewCount++;
+    const newAverageRating = (currentPoint + rating) / product.reviewCount;
+    product.averageRating = parseFloat(newAverageRating.toFixed(2));
 
-    await company.save();
+    await product.save();
     return review;
   } catch (error) {
     throw error;
@@ -46,22 +46,22 @@ export const addReviewToCompany = async (
 
 export const addDescriptionToReview = async (
   description: string,
-  companyId: string,
+  productId: string,
   reviewId: string
 ) => {
   try {
-    const company = await getCompanyById(companyId);
+    const product = await getProductById(productId);
 
-    const reviewToUpdate = company.reviews.find((review) =>
+    const reviewToUpdate = product.reviews.find((review) =>
       review._id.equals(reviewId)
     );
 
     if (!reviewToUpdate) {
-      throw new Error("Review not found in the company");
+      throw new Error("Review not found in the product");
     }
 
     reviewToUpdate.description = description;
-    await company.save();
+    await product.save();
 
     return reviewToUpdate;
   } catch (error) {
@@ -69,12 +69,12 @@ export const addDescriptionToReview = async (
   }
 };
 
-export const getUserReview = async (companyId: string, userId: string) => {
+export const getUserReview = async (productId: string, userId: string) => {
   try {
-    const company = await getCompanyById(companyId);
+    const product = await getProductById(productId);
     await checkUserExists(userId);
 
-    const userReviews = company.reviews.filter(
+    const userReviews = product.reviews.filter(
       (review) => review.userId.toString() === userId
     );
 
@@ -85,15 +85,15 @@ export const getUserReview = async (companyId: string, userId: string) => {
 };
 
 export const getLatestReviews = async (
-  companyId: string,
+  productId: string,
   userId: string,
   end: number
 ) => {
   try {
-    const company = await getCompanyById(companyId);
+    const product = await getProductById(productId);
     await checkUserExists(userId);
 
-    const nonUserReviews = company.reviews.filter(
+    const nonUserReviews = product.reviews.filter(
       (review) => review.userId.toString() !== userId
     );
 

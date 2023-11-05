@@ -1,4 +1,4 @@
 export enum Directory {
   USER_DIRECTORY = "users",
-  COMPANY_DIRECTORY = "companies",
+  COMPANY_DIRECTORY = "products",
 }
