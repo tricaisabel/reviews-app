@@ -4,7 +4,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { NewUser } from "../types/new-user.type";
 import { LoginUser } from "../types/login-user.type";
-import Cart from "../models/cart.model";
+import { getProductById } from "./product.controller";
+import { CartItem } from "../types/new-cart-item.type";
+import { Size } from "../enums/size.enum";
 
 export const oneDay = 24 * 60 * 60;
 
@@ -21,12 +23,8 @@ export const signUp = async (newUser: NewUser) => {
     email: newUser.email,
     password: newUser.password,
     url: newUser.url,
+    cart: []
   });
-
-  await Cart.create({
-    user: savedUser._id,
-    items:[]
-  })
 
   return savedUser;
 };
@@ -57,7 +55,7 @@ export const checkUserExists = async (userId: string) => {
     throw new Error("Please provide a valid ObjectId for userId");
   }
 
-  let user = await User.exists({ _id: userId });
+  let user = await User.findById({ _id: userId });
   if (!user) {
     throw new Error("User with given id doesn't exist");
   }
@@ -71,7 +69,7 @@ export const logIn = async (loginUser: LoginUser) => {
   if (!user) {
     return null;
   }
-
+  console.log(password, user.password)
   const auth = await bcrypt.compare(password, user.password);
   if (!auth) {
     return null;
@@ -79,3 +77,48 @@ export const logIn = async (loginUser: LoginUser) => {
 
   return user;
 };
+
+export const addProductToCart = async (productId: string, userId: string, quantity: number, size: Size)=>{
+  try{
+      const user = await checkUserExists(userId);
+      const product = await getProductById(productId);
+
+      const newCartItem = {
+          size,
+          quantity,
+          productName: product.name,
+          productImage: product.url,
+          productPrice: product.price
+      }
+      user.cart.push(newCartItem)
+
+      await user.save();
+      return newCartItem;
+  }
+  catch(error){
+      throw error;
+  }
+}
+
+export const removeItemFromCart = async (itemId: string, userId: string) =>{
+  try{
+    await checkUserExists(userId);
+    await User.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { cart: { _id: itemId } } },
+      { new: true }
+  );
+  }
+  catch(error){
+    throw error;
+}
+}
+
+export const getCartOfUser = async (userId: string)=>{
+  try{
+    const user = await checkUserExists(userId);
+    return user.cart;
+  }catch(error){
+    throw error;
+  }
+}

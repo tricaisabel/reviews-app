@@ -1,9 +1,32 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
-import productSchema from './product.model'
+import { productSchema } from "./product.model";
 
-const userSchema = new mongoose.Schema({
+const cartItemSchema = new mongoose.Schema({
+  productName:{
+    type: String,
+    required: true
+  },
+  productImage:{
+    type: String,
+    required: true
+  },
+  productPrice:{
+    type: Number,
+    required: true
+  },
+  quantity: {
+    type: Number,
+    required: true
+  },
+  size: {
+    type: String,
+    required: true
+  },
+});
+
+export const userSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -24,6 +47,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  cart:[cartItemSchema]
 });
 
 userSchema.set("validateBeforeSave", true);

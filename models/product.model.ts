@@ -3,7 +3,7 @@ import reviewSchema from "./review.model";
 import { Tags } from "../enums/tag.enum";
 import { Colors } from "../enums/color.enum";
 
-const productSchema = new mongoose.Schema({
+export const productSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

@@ -1,7 +1,7 @@
 import { Colors } from "../enums/color.enum";
 import { Tags } from "../enums/tag.enum";
 
-export type NewProduct = {
+export type ProductForm = {
     name: string;
     url: string;
     price: number;
